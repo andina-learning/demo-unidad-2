@@ -1,4 +1,36 @@
-# Curso: De la respuesta a la recomendación: audita antes de confiar
+# Demo · Línea gráfica de Universidad Andina Virtual
+
+> **Esto es una demostración de estilo, no un curso de Andina.** Muestra cómo se ve una unidad
+> con la estructura RED de Scala Learning y el ADN gráfico de **Universidad Andina Virtual ·
+> Escuela de Posgrado**, para validarlo antes de producir la primera unidad real.
+
+**Ver la demo:** https://andina-learning.github.io/demo-unidad-2/
+
+## Qué es
+
+- **El contenido** es la Unidad 2 de Scala Learning, «De la respuesta a la recomendación:
+  audita antes de confiar» (curso *Toma de decisiones con datos + IA*), tomado literal de su
+  documento de diseño instruccional. Los temas se renumeraron 1 y 2.
+- **La estructura** es la del RED de Scala: portada, contenido de la unidad, introducción,
+  temas con secciones, conclusión con pódcast, evaluación, glosario y referencias.
+- **La piel** es la propuesta para Andina, sacada de su línea gráfica: tipografía Manrope; azul
+  UAC `#00417B`, abismo `#132B41`, celeste `#3FC0F0`, sol `#F0B443` y estrella `#ED6A48`;
+  cuadros pixelados, greca andina, sol y estrella como recursos gráficos; botones en píldora
+  con los estados de la línea; portada al estilo de las miniaturas de video.
+
+## Qué falta para un curso real
+
+- **Fotografías:** las de los temas y el cierre salen de la línea gráfica (pp. 1, 8 y 16) y la
+  portada es la oficial. Para cursos reales hace falta un banco de fotos con licencia.
+- **Video de apoyo:** el video de Scala se reemplazó por la portada de un video de Andina
+  **por producir**; por eso no reproduce nada y se quitaron su licencia y su referencia.
+- **Ilustraciones:** son las de la Unidad 2 de Scala, recoloreadas con la paleta de Andina.
+- Pendiente de Andina: validar la propuesta y entregar en vector la greca, los cuadros, el sol,
+  la estrella y el logo.
+
+---
+
+# Proyecto: De la respuesta a la recomendación: audita antes de confiar
 
 Curso OVA en HTML estático. Este proyecto es **autocontenido**: trae la fuente editable, el
 compilador y todo lo necesario para verlo, modificarlo y publicarlo. No tiene dependencias
