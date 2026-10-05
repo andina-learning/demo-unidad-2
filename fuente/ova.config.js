@@ -46,9 +46,14 @@ module.exports = {
        - `tipo: 'tema'`      → contenido temático, numerado.
      Solo el contenido temático lleva número: el resto se reconoce por su icono.
 
-     NUMERACIÓN · el DI rotula los temas "Tema 3" y "Tema 4": el curso continúa
-     la numeración de la U1 (temas 1 y 2). `numero: 3` en el primer tema fija el
-     arranque y el siguiente sigue correlativo (4). Decisión 2026-09-15.
+     NUMERACIÓN · el DI rotula los temas "Tema 3" y "Tema 4" (continúa la U1),
+     pero en este demo se numeran 1 y 2: sin `numero`, el primer tema arranca en 1.
+     Ajuste del 2026-10-04 (la decisión del 2026-09-15 era continuar con 3 y 4).
+
+     CIERRE · Conclusión, Evaluación, Glosario y Referencias van cada una como
+     bloque propio en el temario, sin el agrupador «Cierre de la unidad»: el
+     `secciones: []` es lo que hace que el motor les dé bloque propio. Sin notas
+     de conteo (preguntas, términos). Ajuste del 2026-10-04.
 
      Las `secciones` con `ancla` aparecen en el menú como sub-ítems y bajan a la
      `.ua-seccion` con ese `id`. Títulos de sección: literales del DI (H1/H2)
@@ -63,17 +68,17 @@ module.exports = {
                    { titulo: 'El ciclo de la decisión: el hilo conductor', ancla: 'ciclo-decision' },     // DI · H1
                    { titulo: 'Los pasos 3 y 4 en acción', ancla: 'pasos-3-y-4' } ] },                    // DI · H1 (acordeón Paso 3 / Paso 4)
 
-    { id: 'tema3',           titulo: 'Auditar críticamente los resultados obtenidos', tipo: 'tema', numero: 3,
+    { id: 'tema3',           titulo: 'Auditar críticamente los resultados obtenidos', tipo: 'tema',
       secciones: [ { titulo: 'Dos fenómenos que conviene nombrar', ancla: 'dos-fenomenos' },             // DI · H2 (stepper Alucinación / Sesgo de automatización)
                    { titulo: 'La técnica de las tres fuentes', ancla: 'tres-fuentes', nota: 'incluye el video de apoyo' } ] },  // DI · H2; el video va al final del tema, como en U1
 
     { id: 'tema4',           titulo: 'Construir y comunicar la recomendación',   tipo: 'tema',
       secciones: [ { titulo: 'Tres elementos que hacen que una recomendación se sostenga', ancla: 'tres-elementos' } ] },  // DI · H2 (acordeón de 3)
 
-    { id: 'conclusion',      titulo: 'Conclusión',                                tipo: 'especial', icon: 'mdi:flag-outline', nota: 'incluye el pódcast de la unidad' },
-    { id: 'evaluacion',      titulo: 'Evaluación de la unidad',                   tipo: 'especial', icon: 'mdi:clipboard-check-outline', nota: '11 preguntas' },
-    { id: 'glosario',        titulo: 'Glosario',                                  tipo: 'especial', icon: 'mdi:book-open-variant-outline', nota: '15 términos' },
-    { id: 'referencias',     titulo: 'Referencias',                               tipo: 'especial', icon: 'mdi:bookmark-outline' },
+    { id: 'conclusion',      titulo: 'Conclusión',                                tipo: 'especial', icon: 'mdi:flag-outline', secciones: [] },
+    { id: 'evaluacion',      titulo: 'Evaluación de la unidad',                   tipo: 'especial', icon: 'mdi:clipboard-check-outline', secciones: [] },
+    { id: 'glosario',        titulo: 'Glosario',                                  tipo: 'especial', icon: 'mdi:book-open-variant-outline', secciones: [] },
+    { id: 'referencias',     titulo: 'Referencias',                               tipo: 'especial', icon: 'mdi:bookmark-outline', secciones: [] },
   ],
 
   /* REFERENCIAS · APA literal del DI §Referencias (se usan al maquetar la pantalla) */

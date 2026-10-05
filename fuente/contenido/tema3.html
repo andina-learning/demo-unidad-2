@@ -372,55 +372,112 @@
         diferentes.
       </p>
 
-      <!-- El archivo viaja con el curso (assets/video/), recodificado a 720p desde el
-           original de insumos/. Póster: fotograma del propio video. -->
+      <!-- EDITORIAL · Demo Andina: en lugar del video de Scala va la portada de un video
+           propio de Andina, por producir. Sigue la plantilla «Miniatura de video» de la
+           línea gráfica (docs/Miniatura de video/): fondo abismo→azul, destellos
+           diagonales, logo blanco arriba a la derecha, eyebrow, titular Light/ExtraBold
+           y la línea fina con el nombre del video. No reproduce nada: es un marcador.
+           Cuando exista el video, se vuelve al <video> con su póster. -->
+      <style>
+        .ua-video-pendiente{
+          position:relative; overflow:hidden; isolation:isolate;
+          aspect-ratio:16/9; border-radius:var(--r-lg);
+          background:var(--grad-andina); color:#fff;
+          box-shadow:0 18px 44px rgba(19,43,65,.28);
+        }
+        .ua-video-pendiente::before{          /* la greca, apenas visible */
+          content:''; position:absolute; inset:0; z-index:0; background:#fff;
+          -webkit-mask:var(--ua-greca) 0 0 / 163px 209px repeat;
+                  mask:var(--ua-greca) 0 0 / 163px 209px repeat;
+          opacity:.05;
+        }
+        .ua-video-pendiente__luz{             /* los planos de luz de las miniaturas */
+          position:absolute; inset:-6%; z-index:1; pointer-events:none;
+          background:
+            linear-gradient(155deg, transparent 50%, rgba(63,192,240,.18) 50.2%, rgba(63,192,240,.04) 64%, transparent 64.2%),
+            linear-gradient(24deg,  transparent 56%, rgba(58,147,208,.22) 56.2%, rgba(58,147,208,.05) 72%, transparent 72.2%);
+        }
+        .ua-video-pendiente__pixeles{
+          position:absolute; z-index:2; left:0; bottom:0; width:13%; aspect-ratio:1;
+          background:var(--ua-pixeles-claro) center / contain no-repeat;
+        }
+        .ua-video-pendiente__estrella{
+          position:absolute; z-index:2; left:31%; top:12%; width:5%; aspect-ratio:1;
+          background:var(--ua-estrella) center / contain no-repeat;
+        }
+        .ua-video-pendiente__logo{
+          position:absolute; z-index:3; top:7%; right:6%; height:9%; width:auto;
+        }
+        .ua-video-pendiente__play{            /* el botón: solo gráfico, no un control */
+          position:absolute; z-index:3; left:20%; top:50%; transform:translate(-50%,-50%);
+          width:clamp(64px, 13%, 112px); aspect-ratio:1; border-radius:50%;
+          display:grid; place-items:center;
+          background:rgba(255,255,255,.12); border:2px solid rgba(255,255,255,.75);
+          box-shadow:0 0 0 12px rgba(63,192,240,.10);
+        }
+        .ua-video-pendiente__play svg{ width:38%; height:38%; margin-left:8%; fill:#fff; }
+        .ua-video-pendiente__texto{
+          position:absolute; z-index:3; right:6%; top:50%; transform:translateY(-42%);
+          width:min(52%, 460px); text-align:right;
+        }
+        .ua-video-pendiente__eyebrow{
+          font-family:var(--font-display); font-weight:800;
+          font-size:clamp(.62rem, 1.5vw, .95rem); letter-spacing:.24em; text-transform:uppercase;
+        }
+        .ua-video-pendiente__titulo{
+          margin:.25em 0 0; color:#fff; font-family:var(--font-display);
+          font-size:clamp(1.15rem, 3.6vw, 2.5rem); line-height:1.12; letter-spacing:-.02em;
+        }
+        .ua-video-pendiente__titulo .ua-suave{ color:#fff; font-weight:300; display:block; }
+        .ua-video-pendiente__titulo strong{ color:#fff; font-weight:800; }
+        .ua-video-pendiente__nombre{
+          margin:.9em 0 0; padding-top:.8em;
+          border-top:1px solid; border-image:linear-gradient(90deg, transparent, var(--c-cielo) 30%, rgba(255,255,255,.7)) 1;
+          font-size:clamp(.7rem, 1.6vw, 1.05rem); font-weight:300; letter-spacing:.06em;
+          color:rgba(255,255,255,.88);
+        }
+        .ua-video-pendiente__chip{
+          position:absolute; z-index:3; left:4%; top:7%;
+          display:inline-flex; align-items:center; gap:8px;
+          padding:6px 14px; border-radius:999px;
+          background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.35);
+          font-size:clamp(.6rem, 1.2vw, .78rem); font-weight:600; letter-spacing:.04em;
+        }
+        .ua-video-pendiente__chip::before{
+          content:''; width:8px; height:8px; border-radius:50%; background:var(--c-sol);
+        }
+        @media (max-width: 560px){
+          .ua-video-pendiente__estrella, .ua-video-pendiente__chip{ display:none; }
+          .ua-video-pendiente__play{ left:18%; }
+        }
+      </style>
       <div class="ova-video" data-reveal>
-        <div class="ova-video__frame" style="position:relative; padding-top:56.25%; border-radius:var(--r-lg); overflow:hidden; background:#000;">
-          <video controls preload="metadata" playsinline
-                 poster="assets/video/medical-ai-decision-support-poster.jpg"
-                 title="Medical AI Decision support"
-                 style="position:absolute; inset:0; width:100%; height:100%;">
-            <source src="assets/video/medical-ai-decision-support.mp4" type="video/mp4">
-          </video>
+        <div class="ua-video-pendiente" role="img"
+             aria-label="Portada del video de apoyo de la Universidad Andina Virtual, por producir: sesgo en la inteligencia artificial que apoya decisiones.">
+          <span class="ua-video-pendiente__luz"></span>
+          <span class="ua-video-pendiente__pixeles"></span>
+          <span class="ua-video-pendiente__estrella"></span>
+          <span class="ua-video-pendiente__chip">Video Andina · por producir</span>
+          <img class="ua-video-pendiente__logo" src="assets/img/logos/andina-logo-blanco.png" alt="" />
+          <span class="ua-video-pendiente__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L7.5 3.64A1 1 0 0 0 6 4.5z"/></svg>
+          </span>
+          <div class="ua-video-pendiente__texto" aria-hidden="true">
+            <div class="ua-video-pendiente__eyebrow">Video de apoyo</div>
+            <p class="ua-video-pendiente__titulo"><span class="ua-suave">Sesgo en la IA</span> <strong>que apoya decisiones.</strong></p>
+            <p class="ua-video-pendiente__nombre">Auditar críticamente los resultados</p>
+          </div>
         </div>
       </div>
 
-      <div class="ova-kpis" style="margin-top:32px;" data-reveal>
-        <div class="ova-kpi">
-          <div class="ova-kpi__icon"><iconify-icon icon="mdi:movie-open-outline"></iconify-icon></div>
-          <div class="ova-kpi__value">2 min 01 s</div>
-          <div class="ova-kpi__label">Medical AI Decision support</div>
-          <div class="ova-kpi__hint">Msahique</div>
-        </div>
-        <div class="ova-kpi">
-          <div class="ova-kpi__icon"><iconify-icon icon="mdi:creative-commons"></iconify-icon></div>
-          <div class="ova-kpi__value">CC BY 4.0</div>
-          <div class="ova-kpi__label">Creative Commons Atribución 4.0 Internacional</div>
-          <div class="ova-kpi__hint">Permite compartir y adaptar con atribución</div>
-        </div>
-      </div>
-
+      <!-- DEMO ANDINA (2026-10-04, decisión del usuario): se quitaron las tarjetas de duración y
+           licencia y el recuadro «Licencia y referencia» del video de Scala (Msahique, CC BY 4.0),
+           porque ese video ya no está. verificar-di.py los marca como ausentes (2 de 72): es esperado. -->
       <p style="margin-top:32px;" data-reveal>
         Se conecta con Parasuraman y Riley (1997) y Skitka et al. (1999), al evidenciar
         por qué una salida automatizada debe auditarse antes de utilizarla para sustentar
         una decisión.
       </p>
-
-      <div class="ova-callout" style="margin-top:24px;" data-reveal>
-        <div class="ova-callout__ico"><iconify-icon icon="mdi:format-quote-close"></iconify-icon></div>
-        <div>
-          <span class="ova-callout__tag">Licencia y referencia</span>
-          <p style="margin:8px 0 0;">
-            Licencia: Creative Commons Atribución 4.0 Internacional (CC BY 4.0). Permite
-            compartir y adaptar el recurso con la atribución correspondiente.
-          </p>
-          <p style="margin:12px 0 0;">
-            Referencia: Msahique. (2024). <em>Medical AI Decision support</em> [Video].
-            Wikimedia Commons.
-            <a href="https://commons.wikimedia.org/wiki/File:Medical_AI_Decision_support.webm" target="_blank" rel="noopener" style="word-break:break-all;">https://commons.wikimedia.org/wiki/File:Medical_AI_Decision_support.webm</a>
-          </p>
-        </div>
-      </div>
 
       <!-- Para reflexionar -->
       <div class="ova-callout ova-callout--reflexion" style="margin-top:32px;" data-reveal>
