@@ -12,7 +12,8 @@
   audita antes de confiar» (curso *Toma de decisiones con datos + IA*), tomado literal de su
   documento de diseño instruccional. Los temas se renumeraron 1 y 2.
 - **La estructura** es la del RED de Scala: portada, contenido de la unidad, introducción,
-  temas con secciones, conclusión con pódcast, evaluación, glosario y referencias.
+  temas con secciones, evaluación y referencias. La conclusión con pódcast y el glosario
+  quedan ocultos por defecto (comentados en el menú de `fuente/ova.config.js`).
 - **La piel** es la propuesta para Andina, sacada de su línea gráfica: tipografía Manrope; azul
   UAC `#00417B`, abismo `#132B41`, celeste `#3FC0F0`, sol `#F0B443` y estrella `#ED6A48`;
   cuadros pixelados, greca andina, sol y estrella como recursos gráficos; botones en píldora
@@ -30,7 +31,7 @@
 
 ---
 
-# Proyecto: De la respuesta a la recomendación: audita antes de confiar
+# Curso: De la respuesta a la recomendación: audita antes de confiar
 
 Curso OVA en HTML estático. Este proyecto es **autocontenido**: trae la fuente editable, el
 compilador y todo lo necesario para verlo, modificarlo y publicarlo. No tiene dependencias
@@ -52,12 +53,12 @@ Abre `http://localhost:8000/spa/`. Ese es el curso tal como lo ve el estudiante.
 | Comando | Qué hace |
 |---|---|
 | `npm run dev` | Compila y sirve el curso en `http://localhost:8000/spa/` |
-| `npm run build` | Compila `fuente/` → `dist/` (9 pantallas, en dos formatos) |
+| `npm run build` | Compila `fuente/` → `dist/` (7 pantallas, en dos formatos) |
 | `npm start` | Solo sirve `dist/` (sin recompilar). `--port 9000` cambia el puerto |
 | `npm test` | Compila y verifica que salieron todas las pantallas |
-| `npm run zip` | Compila y comprime `dist/spa` y `dist/multipagina` para el LMS |
+| `npm run zip` | Compila y comprime `dist/spa` para el LMS (`npm run zip -- --multipagina` añade `dist/multipagina`) |
 
-Verás `✔ 9/9 pantallas → dist/multipagina/ + dist/spa/index.html` al compilar.
+Verás `✔ 7/7 pantallas → dist/multipagina/ + dist/spa/index.html` al compilar.
 
 > Los videos de YouTube solo cargan cuando el curso se sirve por http (LMS o `npm run dev`).
 > Abierto con doble clic desde el disco, el curso muestra en su lugar la miniatura del video
@@ -123,7 +124,8 @@ preset de la institución; crea `fuente/paleta.css` para cambiarlos solo en este
 npm run zip
 ```
 
-Sube el zip de `spa` (o el de `multipagina` si el LMS exige un archivo por pantalla). Nada más.
+Sube el zip de `spa`. Nada más. Si el LMS exige un archivo por pantalla, `npm run zip -- --multipagina`
+genera también el de `multipagina`.
 
 ## Publicar en GitHub Pages
 

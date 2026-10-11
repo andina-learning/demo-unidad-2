@@ -63,8 +63,7 @@ module.exports = {
     { id: 'temario',         titulo: 'Contenido de la unidad',                    tipo: 'especial', icon: 'mdi:map-outline' },
 
     { id: 'introduccion',    titulo: 'Introducción',                              tipo: 'especial', icon: 'mdi:information-variant',
-      secciones: [ { titulo: 'La otra mitad del trabajo de decidir' },                                   // EDITORIAL · apertura; sale de "La otra mitad —la que desarrolla esta unidad—"
-                   { titulo: 'Qué vas a lograr en esta unidad', ancla: 'que-vas-a-lograr' },              // EDITORIAL · agrupa Objetivo + Público objetivo + ¿Qué vas a aprender?, como en U1
+      secciones: [ { titulo: 'Qué vas a lograr en esta unidad', ancla: 'que-vas-a-lograr' },              // EDITORIAL · agrupa Objetivo + Público objetivo + ¿Qué vas a aprender?, como en U1
                    { titulo: 'El ciclo de la decisión: el hilo conductor', ancla: 'ciclo-decision' },     // DI · H1
                    { titulo: 'Los pasos 3 y 4 en acción', ancla: 'pasos-3-y-4' } ] },                    // DI · H1 (acordeón Paso 3 / Paso 4)
 
@@ -75,9 +74,11 @@ module.exports = {
     { id: 'tema4',           titulo: 'Construir y comunicar la recomendación',   tipo: 'tema',
       secciones: [ { titulo: 'Tres elementos que hacen que una recomendación se sostenga', ancla: 'tres-elementos' } ] },  // DI · H2 (acordeón de 3)
 
-    { id: 'conclusion',      titulo: 'Conclusión',                                tipo: 'especial', icon: 'mdi:flag-outline', secciones: [] },
+    /* Conclusión y Glosario: ocultos por defecto (decisión del 2026-10-10, la de la Unidad 3 de
+       Scala). Sus pantallas siguen en contenido/; para mostrarlas, quita el // de su línea. */
+    // { id: 'conclusion',      titulo: 'Conclusión',                                tipo: 'especial', icon: 'mdi:flag-outline', secciones: [] },
     { id: 'evaluacion',      titulo: 'Evaluación de la unidad',                   tipo: 'especial', icon: 'mdi:clipboard-check-outline', secciones: [] },
-    { id: 'glosario',        titulo: 'Glosario',                                  tipo: 'especial', icon: 'mdi:book-open-variant-outline', secciones: [] },
+    // { id: 'glosario',        titulo: 'Glosario',                                  tipo: 'especial', icon: 'mdi:book-open-variant-outline', secciones: [] },
     { id: 'referencias',     titulo: 'Referencias',                               tipo: 'especial', icon: 'mdi:bookmark-outline', secciones: [] },
   ],
 
