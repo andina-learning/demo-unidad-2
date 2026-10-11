@@ -810,6 +810,16 @@ body { font-family: var(--font-body); }
   .ua-escena__num { font-size: 2.6rem; }
 }
 
+/* --- Anterior / Siguiente: uno debajo del otro en pantallas estrechas ------
+   El motor los pone en dos columnas de 1fr: a 390 px cada botón deja ~70 px
+   para el texto, y Manrope en mayúsculas espaciadas («INTRODUCCIÓN») no cabe:
+   la columna crecía y la página se desplazaba en horizontal (medir-pantalla,
+   2-96 px en demo-unidad-2 y demo-unidad-3, 2026-10-10). Apilados, cada uno
+   ocupa el ancho entero. */
+@media (max-width: 560px) {
+  .ova-screen-nav { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+}
+
 /* =========================================================
    AJUSTES HEREDADOS DEL RED DE SCALA (revisión 2026-08-31)
    ========================================================= */
@@ -1464,6 +1474,9 @@ a.ua-bloque__tag--link:focus-visible { outline: 2px solid var(--c-acento); outli
   pointer-events: none;
 }
 .ua-ilustracion:has(figcaption)::after { bottom: auto; top: calc(100% - 66px); }
+/* Con pie, el escalón queda a la altura del pie: el texto le deja su sitio para que
+   no lo pise cuando ocupa dos líneas (demo-unidad-3, «Volviendo al reto», 2026-10-10). */
+.ua-ilustracion:has(figcaption) figcaption { padding-right: 60px; }
 
 /* 4 · Ciclo · la escalera de cuadros (SVG inline en la pantalla) ----------- */
 .ua-ciclo__escalera text { font-family: var(--font-display); }
@@ -1530,3 +1543,219 @@ a.ua-bloque__tag--link:focus-visible { outline: 2px solid var(--c-acento); outli
   color: var(--c-sol);
 }
 [data-version="clara"] .ova-sidebar__menu-item.is-done .num { color: #8A5A00; }
+
+/* =========================================================
+   PIEZAS DE LA UNIDAD 3 DE SCALA · traídas a la piel Andina (2026-10-10)
+   ---------------------------------------------------------
+   Las mismas piezas y reglas que scala-learning/skin/skin.css (§4b, §4d,
+   «Puntos de interés», «Llamado a la acción»), con la paleta y la tipografía
+   de Andina: el azul actúa, el celeste guía, el sol destaca; Manrope sola.
+   Las usa cursos/demo-unidad-3.
+   ========================================================= */
+
+/* 10 · Negrita del DI dentro de un remate ----------------------------------------
+   Cuando lo que el DI pone en negrilla es justo el remate del bloque
+   (<span class="ua-remate"><strong>…</strong></span>), la regla de la negrita
+   del cuerpo (600, color de título) apagaba el remate. Dentro de él, la
+   negrita hereda el 800 azul: el <strong> sigue ahí para el lector y para
+   verificar-di.py. */
+.ova-screen .ua-remate strong,
+.ua-apertura .ua-remate strong { font-weight: inherit; color: inherit; }
+
+/* 11 · Ventana de detalle con ilustración -------------------------------------
+   La ventana del motor mide 560 px: una ilustración de 1200 dentro quedaba a
+   menos de la mitad y sus rótulos en ~5 px. Si lleva una ilustración, se
+   ensancha (Scala, unidad-3-con-ilustrador, «Volviendo al reto», 2026-10-09). */
+.ova-modal__dialog:has(.ua-ilustracion) { max-width: min(900px, 94vw); }
+.ova-modal__body .ua-ilustracion { margin: 0 0 20px; }
+
+/* 12 · Campo: subtítulo con su texto -------------------------------------------
+   Varios subtítulos del mismo nivel del DI, cada uno con su párrafo (los campos
+   de «¿Qué va a lograr en esta unidad?»). Todos pesan igual y ninguno va en
+   tarjeta: una sola columna, un campo por fila, filete fino arriba (decisión de
+   Scala del 2026-10-09: en dos columnas las filas quedaban desparejas).
+   El icono (opcional, aria-hidden) va en azul al 55 %: el sol es de lo que se
+   destaca, no de cada ítem, y el azul lleno significa «clicable».
+   Espacios: título de sección → campos 28 px · filete → icono 20 px · icono →
+   subtítulo 12 px · subtítulo → texto 6 px · entre campos 32 px. Dentro de una
+   .ua-seccion se alinea con el texto del título (después de la viñeta, 30 px). */
+.ua-campo { margin: 32px 0 0; }
+.ua-seccion__titulo + .ua-campo,
+.ua-seccion__titulo + .ua-campos { margin-top: 28px; }
+.ua-seccion > .ua-campo,
+.ua-seccion > .ua-campos { padding-left: 30px; }
+.ua-campos {
+  display: grid;
+  gap: 32px;
+  margin: 32px 0 0;
+}
+.ua-campos > .ua-campo {
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-c);
+}
+.ua-campo__icono {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0 0 12px;
+  font-size: 28px;
+  color: color-mix(in srgb, var(--c-acento) 55%, transparent);
+}
+.ua-campo__titulo {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text-head);
+}
+.ua-campo > p { margin: 0; max-width: 68ch; }
+
+/* 13 · Lista numerada: párrafos largos del DI en serie ---------------------------
+   Para una enumeración de párrafos completos (los «En el primer / segundo /
+   tercer tema…» de una introducción). Misma familia que .ua-campos: sin tarjeta,
+   filete fino arriba de cada ítem. Al margen, en columna fija, el número en
+   Manrope 300 y azul al 46 % (el número de las escenas: contraste de pesos, no
+   de familia) y, opcional, el icono en azul al 55 %. La marca es decorativa
+   (aria-hidden): el <ol> ya numera para el lector de pantalla. En ≤ 720 px la
+   marca pasa a una fila encima del texto. */
+.ua-numerada {
+  list-style: none;
+  margin: 40px 0;
+  padding: 0;
+  display: grid;
+  gap: 32px;
+}
+.ua-numerada__item {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  column-gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-c);
+}
+.ua-numerada__marca {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.ua-numerada__num {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2.3rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--c-acento) 46%, transparent);
+}
+.ua-numerada__icono {
+  display: block;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  color: color-mix(in srgb, var(--c-acento) 55%, transparent);
+}
+.ua-numerada__item > p { margin: 0; max-width: 68ch; }
+@media (max-width: 720px) {
+  .ua-numerada__item { grid-template-columns: minmax(0, 1fr); row-gap: 10px; }
+  .ua-numerada__marca { flex-direction: row; align-items: center; gap: 12px; }
+  .ua-numerada__num { font-size: 1.9rem; }
+}
+
+/* 14 · Puntos de interés · el globo se ve entero ----------------------------------
+   El motor recorta la imagen y abre el globo siempre hacia abajo: el de un punto
+   cerca del borde quedaba cortado (Scala, «Destrucción», 158 px fuera). La caja
+   deja de recortar, el globo cerrado no existe en el layout, y skin.js lo abre
+   hacia donde cabe (.ua-hotspot--arriba) y lo corre si se sale por un costado
+   (--ua-globo-dx). medir-pantalla.js marca «globo-recortado» si vuelve a pasar.
+   El título del globo: el motor lo pinta en azul UAC sobre el abismo (1,4:1);
+   va en celeste (6,9:1, la guía sobre oscuro). En el tema «clara» el globo es
+   blanco y el título vuelve al azul. */
+.ova-hotspots__img { overflow: visible; }
+.ova-hotspots__img > img { border-radius: inherit; }
+.ova-hotspot__tooltip {
+  display: none;
+  transform: translateX(calc(-50% + var(--ua-globo-dx, 0px)));
+}
+.ova-hotspot:hover .ova-hotspot__tooltip,
+.ova-hotspot.is-open .ova-hotspot__tooltip { display: block; opacity: 1; }
+.ova-hotspot:hover,
+.ova-hotspot.is-open { z-index: 5; }
+.ua-hotspot--arriba .ova-hotspot__tooltip { top: auto; bottom: calc(100% + 14px); }
+.ova-hotspot__tooltip strong { color: var(--c-cielo); }
+[data-version="clara"] .ova-hotspot__tooltip strong { color: var(--c-acento); }
+
+/* 15 · Llamado a la acción e indicio de interacción ---------------------------------
+   Antes de cada contenedor interactivo va un llamado a la acción en usted, con
+   el texto que traiga el Word o el de la tabla de llamados de Scala (guía del
+   cliente, 2026-10-09). Es texto HTML real y va entre el título del bloque y el
+   componente, pegado a este. Cada vez que el bloque aparece en pantalla,
+   skin.js («indicio de interacción») pone .ua-indicio al componente y a su
+   llamado: ① la manito hace dos toques con un aro que se abre; ② el primer
+   control que invita late dos veces con un halo azul. ~2,5 s y queda quieto
+   (WCAG 2.2.2); con movimiento reducido no se mueve nada. */
+.ua-cta {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 24px 0 0;
+  font-size: .95rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--text-pri) 85%, transparent);
+}
+.ova-screen > .ua-rotulo + .ua-cta { margin-top: 8px; }
+.ova-screen > .ua-cta + :is(.ova-acordeon, .ova-carrusel, .ova-tabs, .ova-timeline-h, .ova-hotspots,
+  .ova-video, .ova-audio, .ova-beforeafter, .ua-descarga) { margin-top: 14px; }
+.ua-cta__mano {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  font-size: 22px;
+  color: color-mix(in srgb, var(--c-acento) 75%, transparent);
+  transform-origin: 50% 85%;
+}
+.ua-cta__mano::after {      /* el aro del toque, en la yema del dedo de mdi:cursor-pointer */
+  content: '';
+  position: absolute;
+  left: 5px; top: -3px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-acento);
+  opacity: 0;
+}
+@keyframes ua-toque {
+  0%, 100% { transform: none; }
+  35%      { transform: translateY(2px) scale(.86); }
+  60%      { transform: none; }
+}
+@keyframes ua-aro {
+  0%, 30% { opacity: 0; transform: scale(.4); }
+  45%     { opacity: .7; }
+  100%    { opacity: 0; transform: scale(2.2); }
+}
+@keyframes ua-halo {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-acento) 40%, transparent); }
+  100% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--c-acento) 0%, transparent); }
+}
+.ua-cta.ua-indicio .ua-cta__mano         { animation: ua-toque 1s ease-in-out .3s 2; }
+.ua-cta.ua-indicio .ua-cta__mano::after  { animation: ua-aro 1s ease-out .3s 2; }
+.ova-acordeon.ua-indicio .ova-acordeon__item:nth-child(2) .ova-acordeon__head,
+.ova-tabs.ua-indicio .ova-tabs__btn:nth-child(2),
+.ova-timeline-h.ua-indicio .ova-step-card:nth-child(2),
+.ova-carrusel.ua-indicio [data-ova-carrusel-next],
+.ova-audio.ua-indicio .ova-audio__play,
+.ova-beforeafter.ua-indicio .ova-beforeafter__handle,
+.ua-descarga.ua-indicio .ova-btn { animation: ua-halo 1.1s ease-out .6s 2; }
+.ova-hotspot__pulse { animation: none; }
+.ova-hotspots.ua-indicio .ova-hotspot__pulse { animation: ova-pulse 1.4s ease-out .6s 2; }
+@media (prefers-reduced-motion: reduce) {
+  .ua-cta__mano,
+  .ua-cta__mano::after,
+  .ova-hotspot__pulse,
+  .ua-indicio :is(.ova-acordeon__head, .ova-tabs__btn, .ova-step-card, [data-ova-carrusel-next],
+    .ova-audio__play, .ova-beforeafter__handle, .ova-btn) { animation: none !important; }
+}

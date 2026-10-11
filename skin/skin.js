@@ -123,3 +123,117 @@
     }
   });
 })();
+
+/* Capa Andina · globos de los puntos de interés
+   ------------------------------------------------------------------
+   La misma de Scala (2026-10-09). El motor abre el globo de un `.ova-hotspot`
+   siempre hacia abajo, centrado en el punto: cerca de un borde quedaba cortado.
+   Al abrirlo se mide: si no cabe abajo y sí arriba, se abre hacia arriba
+   (.ua-hotspot--arriba), y si se sale por un costado de la imagen, de la
+   ventana o de la caja que la recorta (la figura que se desliza en móvil), se
+   corre lo justo (--ua-globo-dx). Lo de la caja que recorta es propio de
+   Andina: en Scala y UP el globo quedaba 12 px cortado por ella a 390 px
+   (medir-pantalla, 2026-10-10). Se abre al pasar el puntero o al tocar el
+   punto; un toque fuera lo cierra. */
+(() => {
+  'use strict';
+
+  const MARGEN = 8;   // aire mínimo hasta el borde de la imagen, de la caja o de la ventana
+
+  // El primer ancestro que recorta en horizontal: lo que quede fuera de él no se ve.
+  function recortador(el) {
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      if (getComputedStyle(a).overflowX !== 'visible') return a.getBoundingClientRect();
+    }
+    return null;
+  }
+
+  function abrir(punto) {
+    const globo = punto.querySelector('.ova-hotspot__tooltip');
+    if (!globo) return;
+    punto.classList.add('is-open');
+    punto.classList.remove('ua-hotspot--arriba');
+    punto.style.removeProperty('--ua-globo-dx');
+    const caja = (punto.closest('.ova-hotspots__img') || punto.parentElement).getBoundingClientRect();
+    const p = punto.getBoundingClientRect();
+    const g = globo.getBoundingClientRect();
+    const alto = g.height + 14;
+    if (p.bottom + alto > caja.bottom && p.top - alto >= caja.top) punto.classList.add('ua-hotspot--arriba');
+    const corte = recortador(punto);
+    const izq = Math.max(caja.left, corte ? corte.left : 0, 0) + MARGEN;
+    const der = Math.min(caja.right, corte ? corte.right : Infinity, document.documentElement.clientWidth) - MARGEN;
+    let dx = 0;
+    if (g.width <= der - izq) {
+      if (g.left < izq) dx = izq - g.left;
+      else if (g.right > der) dx = der - g.right;
+    }
+    if (dx) punto.style.setProperty('--ua-globo-dx', `${Math.round(dx)}px`);
+  }
+  function cerrar(punto) {
+    punto.classList.remove('is-open', 'ua-hotspot--arriba');
+    punto.style.removeProperty('--ua-globo-dx');
+  }
+
+  document.addEventListener('pointerover', e => {
+    const punto = e.target.closest && e.target.closest('.ova-hotspot');
+    if (punto && !punto.contains(e.relatedTarget)) abrir(punto);
+  });
+  document.addEventListener('pointerout', e => {
+    const punto = e.target.closest && e.target.closest('.ova-hotspot');
+    if (punto && e.pointerType === 'mouse' && !punto.contains(e.relatedTarget)) cerrar(punto);
+  });
+  document.addEventListener('click', e => {
+    const punto = e.target.closest && e.target.closest('.ova-hotspot');
+    document.querySelectorAll('.ova-hotspot.is-open').forEach(otro => { if (otro !== punto) cerrar(otro); });
+    if (punto) abrir(punto);
+  });
+})();
+
+/* Capa Andina · indicio de interacción
+   ------------------------------------------------------------------
+   La misma de Scala (2026-10-09). Cada vez que un componente interactivo
+   aparece en pantalla (al bajar o al subir), él y su llamado a la acción
+   (.ua-cta justo antes) reciben .ua-indicio, y la manito y el halo de skin.css
+   se animan una vez. Al salir del todo se les quita, así que al volver la
+   animación arranca de nuevo. Vigila también lo que la SPA pinta al navegar.
+   Con movimiento reducido, skin.css anula las animaciones. */
+(() => {
+  'use strict';
+  if (!('IntersectionObserver' in window)) return;
+
+  const INTERACTIVOS = '.ova-acordeon, .ova-carrusel, .ova-tabs, .ova-timeline-h, .ova-hotspots, ' +
+                       '.ova-video, .ova-audio, .ova-beforeafter, .ua-descarga';
+  const vigilados = new WeakSet();
+
+  const marcar = (comp, si) => {
+    comp.classList.toggle('ua-indicio', si);
+    const previo = comp.previousElementSibling;
+    if (previo && previo.classList.contains('ua-cta')) previo.classList.toggle('ua-indicio', si);
+  };
+
+  const observador = new IntersectionObserver(entradas => {
+    for (const e of entradas) {
+      if (e.intersectionRatio >= 0.25) marcar(e.target, true);
+      else if (!e.isIntersecting) marcar(e.target, false);
+    }
+  }, { threshold: [0, 0.25] });
+
+  const vigilar = raiz => {
+    if (!raiz.querySelectorAll) return;
+    const lista = raiz.matches && raiz.matches(INTERACTIVOS) ? [raiz] : [];
+    lista.push(...raiz.querySelectorAll(INTERACTIVOS));
+    for (const comp of lista) {
+      if (vigilados.has(comp)) continue;
+      vigilados.add(comp);
+      observador.observe(comp);
+    }
+  };
+
+  const iniciar = () => {
+    vigilar(document);
+    new MutationObserver(cambios => {
+      for (const c of cambios) c.addedNodes.forEach(n => n.nodeType === 1 && vigilar(n));
+    }).observe(document.body, { childList: true, subtree: true });
+  };
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', iniciar) : iniciar();
+})();
