@@ -951,34 +951,34 @@ body { font-family: var(--font-body); }
    Regla del RED (ajuste de Scala): el estudiante necesita ver el recorrido completo y no
    caer directo en la introducción. */
 .ua-temario { display: flex; flex-direction: column; gap: 14px; margin: 36px 0; }
-.ua-bloque {
+.ova-bloque {
   background: var(--bg-surface);
   border: 1px solid var(--borde, var(--border-c));
   border-left: 4px solid var(--tono, var(--c-acento));
   border-radius: var(--r-md);
   padding: 22px 26px;
 }
-.ua-bloque__tag {
+.ova-bloque__tag {
   display: block; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
   font-weight: 700; color: var(--tono, var(--c-acento)); margin-bottom: 12px;
 }
-.ua-bloque ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.ua-bloque li { display: flex; gap: 12px; align-items: baseline; font-size: .99rem; }
-.ua-bloque li .n {
+.ova-bloque ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.ova-bloque li { display: flex; gap: 12px; align-items: baseline; font-size: .99rem; }
+.ova-bloque li .n {
   font-size: .76rem; font-weight: 700; color: var(--text-mut);
   min-width: 22px; font-variant-numeric: tabular-nums;
 }
 /* Los subtemas mantienen su número en la columna —si se desplaza, la lista
    parece desalineada en vez de jerárquica— y sangran solo el texto, con un
    guion que marca de qué tema dependen. */
-.ua-bloque li .t { display: inline-block; }
-.ua-bloque li.sub { font-size: .93rem; color: var(--text-mut); }
-.ua-bloque li.sub .t { position: relative; padding-left: 26px; }
-.ua-bloque li.sub .t::before {
+.ova-bloque li .t { display: inline-block; }
+.ova-bloque li.sub { font-size: .93rem; color: var(--text-mut); }
+.ova-bloque li.sub .t { position: relative; padding-left: 26px; }
+.ova-bloque li.sub .t::before {
   content: ''; position: absolute; left: 4px; top: .62em;
   width: 13px; height: 1px; background: currentColor; opacity: .4;
 }
-.ua-bloque li em { font-style: normal; color: var(--text-mut); font-size: .88rem; }
+.ova-bloque li em { font-style: normal; color: var(--text-mut); font-size: .88rem; }
 
 .ua-descarga {
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
@@ -991,10 +991,10 @@ body { font-family: var(--font-body); }
 .ua-descarga__info span { font-size: .9rem; color: var(--text-mut); }
 
 /* 7 · Temario · marca por icono en las secciones estructurales -------------- */
-.ua-bloque__tag { display: inline-flex; align-items: center; gap: 8px; }
-.ua-bloque__tag iconify-icon { font-size: 1.1rem; }
-.ua-bloque li .n--icono { color: var(--c-acento); }
-.ua-bloque li .n--icono iconify-icon { font-size: 1.05rem; }
+.ova-bloque__tag { display: inline-flex; align-items: center; gap: 8px; }
+.ova-bloque__tag iconify-icon { font-size: 1.1rem; }
+.ova-bloque li .n--icono { color: var(--c-acento); }
+.ova-bloque li .n--icono iconify-icon { font-size: 1.05rem; }
 
 /* (el panel de cierre se descartó: los ítems van como los demás) */
 
@@ -1004,8 +1004,8 @@ body { font-family: var(--font-body); }
    Se descarta el patrón de un botón por fila —ocho botones azules seguidos
    anulan la regla de que el azul marca la acción—: manda la fila entera,
    con una flecha que aparece al acercarse. */
-.ua-bloque li { padding: 0; }
-.ua-fila {
+.ova-bloque li { padding: 0; }
+.ova-fila {
   display: flex; align-items: baseline; gap: 12px;
   padding: 7px 10px 7px 8px;
   margin-left: -8px;
@@ -1014,28 +1014,28 @@ body { font-family: var(--font-body); }
   color: inherit;
   transition: background .16s ease, color .16s ease;
 }
-.ua-fila:hover, .ua-fila:focus-visible {
+.ova-fila:hover, .ova-fila:focus-visible {
   background: color-mix(in srgb, var(--c-acento) 7%, transparent);
   color: var(--text-head);
 }
-.ua-fila:focus-visible { outline: 2px solid var(--c-acento); outline-offset: 2px; }
-.ua-fila__ir {
+.ova-fila:focus-visible { outline: 2px solid var(--c-acento); outline-offset: 2px; }
+.ova-fila__ir {
   margin-left: auto;
   color: var(--c-acento);
   opacity: 0;
   transform: translateX(-6px);
   transition: opacity .16s ease, transform .16s ease;
 }
-.ua-fila:hover .ua-fila__ir,
-.ua-fila:focus-visible .ua-fila__ir { opacity: 1; transform: translateX(0); }
-@media (hover: none) { .ua-fila__ir { opacity: .45; transform: none; } }
+.ova-fila:hover .ova-fila__ir,
+.ova-fila:focus-visible .ova-fila__ir { opacity: 1; transform: translateX(0); }
+@media (hover: none) { .ova-fila__ir { opacity: .45; transform: none; } }
 
 /* El título de bloque de un tema es enlace a la pantalla del tema */
-a.ua-bloque__tag--link { text-decoration: none; color: var(--c-acento); }
-a.ua-bloque__tag--link:hover .ua-fila__ir,
-a.ua-bloque__tag--link:focus-visible .ua-fila__ir { opacity: 1; transform: translateX(0); }
-a.ua-bloque__tag--link .ua-fila__ir { margin-left: 6px; }
-a.ua-bloque__tag--link:focus-visible { outline: 2px solid var(--c-acento); outline-offset: 2px; border-radius: 4px; }
+a.ova-bloque__tag--link { text-decoration: none; color: var(--c-acento); }
+a.ova-bloque__tag--link:hover .ova-fila__ir,
+a.ova-bloque__tag--link:focus-visible .ova-fila__ir { opacity: 1; transform: translateX(0); }
+a.ova-bloque__tag--link .ova-fila__ir { margin-left: 6px; }
+a.ova-bloque__tag--link:focus-visible { outline: 2px solid var(--c-acento); outline-offset: 2px; border-radius: 4px; }
 
 /* 10 · Sección interna de un tema ------------------------------------------
    Los subtemas viven dentro de la página de su tema, con numeración propia
@@ -1382,15 +1382,15 @@ a.ua-bloque__tag--link:focus-visible { outline: 2px solid var(--c-acento); outli
    No enlazan a ninguna parte: se ven apagadas y con la misma sangría que las
    demás. Se borran del contenido cuando el envío llegue. */
 .ua-temario--pendiente { margin-top: 0; }
-.ua-temario--pendiente .ua-bloque {
+.ua-temario--pendiente .ova-bloque {
   background: transparent;
   border-style: dashed;
   border-left-color: color-mix(in srgb, var(--text-mut) 45%, transparent);
   color: var(--text-mut);
 }
-.ua-temario--pendiente .ua-bloque__tag { color: var(--text-mut); }
-.ua-temario--pendiente .ua-bloque li { padding-left: 14px; }
-.ua-temario--pendiente .ua-bloque li .n--icono { color: var(--text-mut); }
+.ua-temario--pendiente .ova-bloque__tag { color: var(--text-mut); }
+.ua-temario--pendiente .ova-bloque li { padding-left: 14px; }
+.ua-temario--pendiente .ova-bloque li .n--icono { color: var(--text-mut); }
 
 /* =========================================================
    ADN ANDINA · componentes y ajustes propios de la línea UA
